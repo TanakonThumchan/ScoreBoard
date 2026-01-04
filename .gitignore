@@ -1,0 +1,15 @@
+# Cartella di compilazione (ENORME, non caricare mai!)
+build/
+
+# File di configurazione SDK (di solito si tiene, ma il backup no)
+sdkconfig.old
+
+# File temporanei di VS Code (opzionale, ma consigliato)
+.vscode/
+.DS_Store
+
+# File binari e mappe
+*.bin
+*.elf
+*.map
+*.hex
