@@ -24,10 +24,10 @@ A digital scoreboard powered by **ESP8266** and **FreeRTOS**, designed to be con
 
 | Component | Pin Name | ESP8266 GPIO |
 | :--- | :--- | :--- |
-| **I2C SCL** | D1 | GPIO 12 |
-| **I2C SDA** | D2 | GPIO 14 |
+| **I2C SCL** | D6 | GPIO 12 |
+| **I2C SDA** | D5 | GPIO 14 |
 | **RF Data** | D? | GPIO ? |
-| **LED Data** | D? | GPIO ? |
+| **LED Data** | RX | GPIO 3 |
 
 *(Update this table with your actual wiring)*
 
