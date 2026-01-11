@@ -61,6 +61,26 @@ A digital scoreboard powered by **ESP8266** and **FreeRTOS**, designed to be con
     make flash monitor
     ```
 
-## 📝 License
+## License & Credits
 
-This project is open source. The U8g2 library is licensed under the 2-Clause BSD License.
+This project is open source and available under the **MIT License** (see the [LICENSE](LICENSE) file for details).
+
+### Third-Party Components
+This project makes use of the following open-source libraries and components:
+
+* **ESP8266 RTOS SDK** by [Espressif Systems](https://github.com/espressif/ESP8266_RTOS_SDK)
+    * Official development framework for ESP8266.
+    * License: [Apache License 2.0](https://github.com/espressif/ESP8266_RTOS_SDK/blob/master/LICENSE)
+
+* **U8g2** by [olikraus](https://github.com/olikraus/u8g2)
+    * Universal 8-bit Graphics Library for embedded systems.
+    * License: [2-Clause BSD License](https://github.com/olikraus/u8g2/blob/master/LICENSE)
+
+* **rc-switch** by [sui77](https://github.com/sui77/rc-switch)
+    * Library for operating low cost 433MHz/315MHz remote control mains switches.
+    * License: LGPL-2.1 (Check component header for specific details).
+    * **Note:** Adapted for ESP8266 RTOS SDK usage via a custom `WProgram.h` compatibility shim (no changes to core library logic).
+
+* **WS2812 I2S Driver** by [esp8266-setup](https://github.com/esp8266-setup/ws2812_i2s)
+    * I2S based driver for WS2812B leds on ESP8266.
+    * License: [MIT License](https://github.com/esp8266-setup/ws2812_i2s/blob/master/LICENSE-MIT.txt) / [BSD License](https://github.com/esp8266-setup/ws2812_i2s/blob/master/LICENSE-BSD.txt) (Dual licensed based on ESP Open RTOS derivation).
