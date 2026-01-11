@@ -1,4 +1,4 @@
-# RF Remote Controlled Scoreboard (ESP8266)
+# RF Remote Controlled Scoreboard (ESP8266) - (Ongoing)
 
 A digital scoreboard powered by **ESP8266** and **FreeRTOS**, designed to be controlled via a 433MHz RF remote. This project drives WS2812B LED strips to display scores and utilizes an IO expander for physical inputs, operating completely offline (No Wi-Fi) to maximize real-time performance.
 
@@ -14,7 +14,7 @@ A digital scoreboard powered by **ESP8266** and **FreeRTOS**, designed to be con
 ## 🛠 Hardware Required
 
 * **MCU:** ESP8266 (NodeMCU v2/v3 or ESP-12E).
-* **Display:** WS2812B Addressable LED Strip (Matrix or 7-Segment arrangement).
+* **Display:** WS2812B Addressable LED Strip (7-Segment arrangement).
 * **RF Module:** 433MHz Receiver (RX470-4 or WL102-341).
 * **IO Expander:** PCF8575 (I2C).
 * **Power:** 5V Power Supply (Amperage depends on LED count).
@@ -26,10 +26,8 @@ A digital scoreboard powered by **ESP8266** and **FreeRTOS**, designed to be con
 | :--- | :--- | :--- |
 | **I2C SCL** | D6 | GPIO 12 |
 | **I2C SDA** | D5 | GPIO 14 |
-| **RF Data** | D? | GPIO ? |
+| **RF Data** | D7 | GPIO 13 |
 | **LED Data** | RX | GPIO 3 |
-
-*(Update this table with your actual wiring)*
 
 ## 💻 Software & Build
 
@@ -47,8 +45,8 @@ A digital scoreboard powered by **ESP8266** and **FreeRTOS**, designed to be con
 
 1.  **Clone the repository:**
     ```bash
-    git clone <your-repo-url>
-    cd <project-folder>
+    git clone https://github.com/TanakonThumchan/ScoreBoard.git
+    cd ScoreBoard
     ```
 
 2.  **Configure the project:**

@@ -2,12 +2,9 @@
 #define U8G2_ESP8266_HAL_H
 
 #include "u8g2.h"
-#include "driver/gpio.h"
-#include "driver/i2c.h"
 
 // Definisci qui i tuoi PIN per il display I2C
-#define I2C_SCL_IO           GPIO_NUM_12   
-#define I2C_SDA_IO           GPIO_NUM_14   
+
 
 #ifdef __cplusplus
 extern "C" {
