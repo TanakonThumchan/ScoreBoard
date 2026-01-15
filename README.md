@@ -45,7 +45,7 @@ A digital scoreboard powered by **ESP8266** and **FreeRTOS**, designed to be con
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/TanakonThumchan/ScoreBoard.git
+    git clone https://github.com/TanakonThumchan/ESP8266-RF-Remote-Scoreboard.git
     cd ScoreBoard
     ```
 

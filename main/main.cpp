@@ -46,10 +46,10 @@ void display_task(void *pvParameters)
         &u8g2,
         U8G2_R0,                       // Rotazione (R0, R1, R2, R3)
         u8g2_esp8266_i2c_byte_cb,      // Hardware I2C callback
-        u8g2_esp8266_gpio_and_delay_cb // Usa la nostra funzione callback definita sopra
+        u8g2_esp8266_gpio_and_delay_cb // GPIO and delay callback
     );
 
-    u8g2_InitDisplay(&u8g2);     // send init sequence to the display, display is in sleep mode after this,
+    u8g2_InitDisplay(&u8g2);     // send init sequence to the display, display is in sleep mode after this
     u8g2_SetPowerSave(&u8g2, 0); // wake up display
 
     while (1)
