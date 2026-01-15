@@ -3,7 +3,7 @@
 # project subdirectory.
 #
 
-PROJECT_NAME := ScoreBoard
+PROJECT_NAME := ESP8266-RF-Remote-Scoreboard
 
 include $(IDF_PATH)/make/project.mk
 
