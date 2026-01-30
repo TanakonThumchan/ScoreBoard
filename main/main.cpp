@@ -6,9 +6,10 @@
 #include "driver/gpio.h"
 #include "driver/i2c.h"
 #include "u8g2.h"
-#include "u8g2_esp8266_hal.h"
 #include "ws2812_i2s.h"
 #include "RCSwitch.h"
+#include "LCD_Display.hpp"
+#include "ScoreBoard.hpp"
 
 #define LED_PER_SEGMENT 3
 #define PIXEL_COUNT (7 * LED_PER_SEGMENT * 4)
@@ -17,57 +18,18 @@
 #define I2C_SCL_IO GPIO_NUM_12
 #define I2C_SDA_IO GPIO_NUM_14
 
-struct scoreBoard
-{
-    uint8_t teamOneScore;
-    uint8_t teamOneFoul;
-    uint8_t teamTwoScore;
-    uint8_t teamTwoFoul;
-};
-
 u8g2_t u8g2;
 RCSwitch rf_receiver = RCSwitch();
 
-extern "C"
+void displayTest_task(void *pvParameters)
 {
-    void app_main(void);
-}
-
-void display_task(void *pvParameters)
-{
-    // Setup U8g2
-    // IMPORTANTE: Scegli il driver giusto per il tuo display!
-    // u8g2_Setup_ssd1306_i2c_128x64_noname_f
-    // SSD1306 = Chip del display
-    // 128x64  = Risoluzione
-    // noname  = Driver generico
-    // f       = Full buffer (più veloce, usa 1024 byte di RAM)
-    u8g2_Setup_ssd1306_i2c_128x64_noname_f(
-        &u8g2,
-        U8G2_R0,                       // Rotazione (R0, R1, R2, R3)
-        u8g2_esp8266_i2c_byte_cb,      // Hardware I2C callback
-        u8g2_esp8266_gpio_and_delay_cb // GPIO and delay callback
-    );
-
-    u8g2_InitDisplay(&u8g2);     // send init sequence to the display, display is in sleep mode after this
-    u8g2_SetPowerSave(&u8g2, 0); // wake up display
-
+    LCD_Display *display = new LCD_Display(I2C_SDA_IO, I2C_SCL_IO);
+    static int contatore = 0;
+    char buffer[16];
     while (1)
     {
-        u8g2_ClearBuffer(&u8g2);
-
-        u8g2_DrawFrame(&u8g2, 0, 0, 128, 64);
-
-        u8g2_SetFont(&u8g2, u8g2_font_ncenB08_tr);
-        u8g2_DrawStr(&u8g2, 5, 20, "GPIO 14 & 12");
-        printf("GPIO 14 & 12\n");
-
-        u8g2_SetFont(&u8g2, u8g2_font_6x10_tr);
-        u8g2_DrawStr(&u8g2, 5, 45, "Funziona VERO!");
-        printf("Funziona!\n");
-
-        u8g2_SendBuffer(&u8g2);
-
+        snprintf(buffer, sizeof(buffer), "TESTING: %d", contatore++);
+        display->showText(5, 15, buffer);
         vTaskDelay(1000 / portTICK_RATE_MS);
     }
 }
@@ -76,13 +38,11 @@ void led_task(void *pvParameters)
 {
     ws2812_i2s_init(PIXEL_COUNT);
 
-    // Crea un array di pixel (struttura definita dalla lib)
     ws2812_pixel_t pixels[PIXEL_COUNT];
 
     while (1)
     {
         // setPixel(pixels,);
-        //  Imposta tutto rosso
         for (int i = 0; i < PIXEL_COUNT; i++)
         {
             pixels[i].red = 255;
@@ -90,7 +50,6 @@ void led_task(void *pvParameters)
             pixels[i].blue = 0;
         }
 
-        // Manda i dati (Non bloccante grazie al DMA!)
         ws2812_i2s_update(pixels);
         vTaskDelay(200 / portTICK_RATE_MS);
     }
@@ -122,17 +81,22 @@ static void i2c_master_init()
     conf.scl_io_num = I2C_SCL_IO;
     conf.scl_pullup_en = GPIO_PULLUP_ENABLE;
 
-    // Clock stretch logic for ESP8266
     conf.clk_stretch_tick = 300;
 
     i2c_driver_install(I2C_NUM_0, conf.mode);
     i2c_param_config(I2C_NUM_0, &conf);
 }
 
-void app_main()
+extern "C" void app_main()
 {
     i2c_master_init();
-    xTaskCreate(led_task, "LedTask", 2048, NULL, 2, NULL);
-    xTaskCreate(rf_task, "RFTask", 1024, NULL, 2, NULL);
-    xTaskCreate(display_task, "DisplayTask", 2048, NULL, 2, NULL);
+    ScoreBoard::getInstance().init(); 
+
+    // xTaskCreate(led_task, "LedTask", 2048, NULL, 2, NULL);
+    // xTaskCreate(rf_task, "RFTask", 1024, NULL, 2, NULL);
+    // xTaskCreate(display_task, "DisplayTask", 2048, NULL, 2, NULL);
+    //xTaskCreate(displayTest_task, "DisplayTask", 2048, NULL, 2, NULL);
+
+    LCD_Display *myDisplay = new LCD_Display(I2C_SDA_IO, I2C_SCL_IO);
+    myDisplay->start();
 }

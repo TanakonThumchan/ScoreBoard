@@ -76,9 +76,9 @@ static inline void pinMode(int pin, int mode) {
 
 /**
  * @brief Simulates Arduino attachInterrupt.
- * * Note: You MUST call gpio_install_isr_service(0) in your app_main() 
+ * Note: You MUST call gpio_install_isr_service(0) in your app_main() 
  * before using this function, otherwise it will fail or crash.
- * * @param pin The GPIO number
+ * @param pin The GPIO number
  * @param handler The callback function (ISR)
  * @param mode The trigger mode (RISING, FALLING, CHANGE)
  */
